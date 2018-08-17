@@ -1028,7 +1028,7 @@ public class MainActivity extends AppCompatActivity {
             public void connected(@NonNull DownloadTask task, int blockCount, long currentOffset,
                                   long totalLength) {
                 Log.e("MainActivity", "connected");
-                calcSpeed(task, currentOffset);
+                updateBunchInfoAndProgress();
             }
 
             @Override
@@ -1052,7 +1052,9 @@ public class MainActivity extends AppCompatActivity {
         Log.e("MainActivity", "Total Progress: " + currentCount + "/" + totalCount);
     }
 
-    private void calcSpeed(DownloadTask task, long currentOffset) {
-        updateBunchInfoAndProgress();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        downloadContext.stop();
     }
 }
